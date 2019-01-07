@@ -2,7 +2,7 @@
 Weekly Share
 #########################################
 :Auther: Xuemei Wang
-:Date: 2018-12-24
+:Date: 2019-01-07
 
 .. contents:: :depth: 1
 
@@ -20,7 +20,7 @@ Behind the Vocabularies
 
 1. Why learn one learner when you can learn many?
 2. If we have some/many (weak) learners, how to organize these (weak) learners to make a final strong learner?
-3. Dose the final learn take full (more and more?) advantage of weak learners? How?
+3. Does the final learn take full (more and more?) advantage of weak learners? How?
 
 Ensemble: combine many learners
   * (Weighted) combinations of learners
@@ -28,21 +28,21 @@ Ensemble: combine many learners
 
 Simple ensembles
   * "Committees"
-    * Unwiehted average / majority vote
+      * Unwiehted average / majority vote
   * Weighted averages
-    * Up-weight "better" learns
+      * Up-weight "better" learns
   * One option: train a "predictor of predictors"
-    * Treat individual predictors as features
+      * Treat individual predictors as features
 
 Mixtures of experts
   * Can make weights depend on x
-    * Weight :math:`\alpha_i (x)` indicates "expertise"
-    * Combine: weighted avg or just pick largest
+      * Weight :math:`\alpha_i (x)` indicates "expertise"
+      * Combine: weighted avg or just pick largest
 
 Roughly classified:
 
 1. Randomly, disorderedly, averagely?
-2. Boosting: orderedly, weightedly, sysmatically (Dose that mean it is better?)
+2. Boosting: orderedly, weightedly, sysmatically (Does that mean it is better?)
 
 Boosting
 =========================================
@@ -94,9 +94,6 @@ and accuracy of machine learning algorithms used in statistical classification a
   * To test, run each training learner
       * Each learner votes on the output, take majority
       * For regression: each regressor predicts, take average
-  * Notes for Some complexity control: harder for each to memorize data
-      * Doesn't work for linear models (e.g. linear regression)
-      * Perceptrons OK (linear + threshold = nonlinear)
 
 Purpose: reduce overfitting
 
@@ -120,7 +117,7 @@ AdaBoost (adaptive boosting)
 AdaBoost, short for Adaptive Boosting, is a machine learning meta-algorithm formulated by Yoav Freund and Robert Schapire.
 
   * It can be used in conjunction with many other learning algorithms ('weak learner') is combined into a weighted sum that represents the final output of the boosted classifer.
-  * (*) AdaBoost is sensitive to noisy data and outliers. (noisy data and outliers have high chances to be up-weightened)
+  * (*) AdaBoost is sensitive to noisy data and outliers. (noisy data and outliers have high chances to be up-weighted)
   * In some problems it can be less susceptible to the overfitting problem than other learning algorithms. (?)
   * The individual learners can be weak, but as long as the performance of each one is slightly better than random guessing, the final model can be proven to converge to a strong learner.
   * When used with decision tree learning, information gatherd at each stage of the AdaBoost algorithm about the relaive 'hardness' of each training sample is fed into the tree growing algorithm such that later trees tend to focus on harder-to-classify example.
@@ -187,9 +184,13 @@ Error function (曲线) :
 
 where :math:`\epsilon_m = \sum_{y_i \neq k_m(x_i)} w_i^{(m)} / \sum_{i=1}^N w_i^{(m)}`
 
-错误的越少，learner权重越大。与特殊的误差函数有关，还是适应于所有误差函数？
+1. 对于单个训练数据，错误越大，权重越大。
+2. 对于learner, 错误的越少，权重越大。
 
-问题：效果是否一定不差于无加权平均？AdaBoost的结果是否一定比random forest好？如果真的最强学习机组合就是无加权平均，AdaBoost能否把它找出来？
+问题：
+
+1. 效果是否一定不差于无加权平均？AdaBoost的结果是否一定比random forest好？如果真的最强学习机组合就是无加权平均，AdaBoost能否把它找出来？
+2. 顺序是否影响结果？如何影响？
 
 Illuminateion
 -----------------------------------------
