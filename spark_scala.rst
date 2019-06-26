@@ -3,8 +3,18 @@ Spark SQL
 
 Overview
 ================================================
+Apache Spark is a fast and general-purpose cluster computing system.
+It provides high-level APIs in Java, Scala, Python and R,
+and an optimized engine that supports general execution graphs.
+It also supports a rich set of higher-level tools including Spark SQL for SQL and structured data processing,
+MLlib for machine learning, GraphX for graph processing, and Spark Streaming.
 
 Spark SQL is a Spark module for structured data processing.
+Unlike the basic Spark RDD API, the interfaces provided by Spark SQL provide Spark with more information about the structure of both the data and the computation being performed.
+Internally, Spark SQL uses this extra information to perform extra optimizations.
+
+SQL
+================================================
 One use of Spark SQL is to execute SQL queries.
 Spark SQL can also be used to read data from an existing Hive installation.
 When running SQL from within another programming language the results will be returned as a Dataset/DataFrame.
@@ -18,6 +28,26 @@ Datasets and DataFrames
   * The Dataset API is avaiable in Scala and Java. 
 
 2. A DataFrame is a Dataset organized into named columns. 
+
+   * Dataframes can be constructed from a wide array of sources such as:
+     structed data files, tables in Hive, external databases, or existing RDDs.
+   * In Scala and Java, a DataFrame is represented by a Dataset of Rows.
+   * In the Scala API, DataFrame is simply a type alias of Dataset[Row]
+
+3. Starting point: SparkSession
+
+   * SparkSession in Spark 2.0 provieds builtin support for Hive features including the ability to wirte queries using HiveQL,
+     access to Hive UDFs, and the ability to read data from Hive tables.
+
+4. Creating DataFrames
+
+   * With a SparkSession, applications can create DataFrames from an existing RDD, from a Hive table, or from Spark data sources.
+
+Data Sources
+================================================
+
+Spark SQL supports operating on a variety of data sources through the DataFrame interfance.
+A DataFrame can be operated on using relational transformations and can also be used to create a temporary view.
 
 SparkContext and SparkConf and SparkSession
 ================================================
@@ -40,6 +70,16 @@ SparkContext and SparkConf and SparkSession
 
    * it is the main entry point for Spark functionality.
    * A SparkContext represents the connection to a Spark cluster, and can be used to create RDDs, accumulators and broadcast variables on that cluster.
+
+4. The sql function on a SparkSession enables applications to run SQL queries programmatically and returns the result as a DataFrame.
+
+Creating Datasets
+================================================
+
+Datasets are similar to RDDs, however, instead of using Java serialization of Kryo they use a specialized Encoder to serialize the objects for processing or transmitting over the network.
+While both encoders and standard serialization are responsible for turning an object into bytes,
+encoders are code generated dynamically and use a format that allows Spark to perform many operations like filtering,
+sorting and hashing without deserializing the bytes back into an object.
 
 
 Read and Write files from Hive
@@ -122,11 +162,38 @@ How to read from a Hive table with Spark Scala?
   logger.info("Reading hive table: OK")
   logger.info(dfHive.show())
 
-Read and Write files from HDFS
-################################################
+How to write to a Hive table with Spark Scala?
+================================================
 
-Read and Write files from MongaDB
-################################################
+.. code:: scala
 
+  // Defining a Helloworld class
+  case class HelloWorld(messaage: String)
+  // ======= Creating a dataframe with 1 partition
+  val df = Seq(HelloWorld("helloworld")).toDF().coalesce(1)
+
+  // ======= Writing files
+  // Writing Dataframe as parquet file
+  df.write.mode(SaveMode.Overwrite).parquet(hdfs_master + "user/hdfs/wiki/testwiki")
+  // Writing Dataframe as csv file
+  df.write.mode(SaveMode.Overwrite).csv(hdfs_master + "user/hdfs/wiki/testwiki.csv")
+
+How to read from HDFS with Spark Scala?
+================================================
+
+.. code:: scala
+
+  // ======= Reading files
+  // Reading parquet files into a Spark Dataframe
+  val df_parquet = session.read.parquet(hdfs_master + "user/hdfs/wiki/testwiki")
+  // Reading csv files into a Spark Dataframe
+  val df_csv = sparkSession.read.option("inferSchema", "true").csv(hdfs_master + "user/hdfs/wiki/testwiki.csv")
+
+
+How to read from a Hive table with Spark Scala?
+================================================
+
+Spark APIs: RDDs, DataFrames, and Datasets
+================================================
 
 

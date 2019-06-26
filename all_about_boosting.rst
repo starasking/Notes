@@ -46,7 +46,7 @@ Roughly classified:
 
 Boosting
 =========================================
-1. Boosting is a machine learning *ensemble meta-algorithm* for primarily reducing bias, and also variance in supervised learning, and a family of machine learning algorithms that convert weak lelarnere to strong ones.
+1. Boosting is a machine learning *ensemble meta-algorithm* for primarily reducing bias, and also variance in supervised learning, and a family of machine learning algorithms that convert weak learner to strong ones.
 
   * high bias: poor traning, underfitting
   * high variance: poor generalizing, overfitting, memorizing data
@@ -57,7 +57,7 @@ Boosting
 5. After a weak learner is added, the data weights are readjusted, known as "re-weighting".
 6. (:math:`\star`) Misclassified input data gain a higher weight and examples that are classified correctly lost weight.
 7. (:math:`\star`) Future weak learners focus more on the examples that previous weak learners misclassified.
-8. Only algorithms that are provable boosting algorithms in the probably approximately correct learning formulation can accurately be called boosting glgorithms.
+8. Only algorithms that are provable boosting algorithms in the probably approximately correct learning formulation can accurately be called boosting algorithms.
 9. Other algorithms that are similar in spirit to boosting algorithms are sometimes called "leveraging algorithms"
 10. (:math:`\star`) The main variation between many boosting algorithms is their method of weighting training data points and hypothess.
 
@@ -82,6 +82,7 @@ Bootstrap Aggregating
 
 1. Boostrap aggregrating, also called bagging, is a machine learning *ensemble meta-algorithm* designed to improve the stability
 and accuracy of machine learning algorithms used in statistical classification and regression.
+
 2. It also reduces variance and helps to avoid overfitting.
 
 "Bagging" = boostrap aggregation
@@ -250,8 +251,8 @@ Illumination
 -----------------------------------------
 
 .. image:: gradient\ boosting.png
-  :height: 800
-  :width: 800
+  :height: 600
+  :width: 600
 
 Gradient Boosting Decision Tree
 =========================================
@@ -259,7 +260,9 @@ Gradient Boosting Decision Tree
 Compare Gradient boostring and classification and regression tree (CART)
 对于分类问题，如果选择指数函数，则为Adaboost
 
-.. figure:: boosting\ tree.png
+.. image:: boosting\ tree.png
+  :height: 200
+  :width: 600
 
 
 Extreme Gradient Boosting (XGboost)
